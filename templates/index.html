@@ -38,7 +38,7 @@
             if (!painting) return;
             ctx.fillStyle = 'black';
             ctx.beginPath();
-            ctx.arc(e.offsetX, e.offsetY, 10, 0, Math.PI * 2);
+            ctx.arc(e.offsetX, e.offsetY, 6, 0, Math.PI * 2);
             ctx.fill();
         }
 
@@ -57,6 +57,7 @@
             .then(data => {
                 document.getElementById("canvas-result").innerHTML =
                     `<h3>Drawing Prediction: ${data.prediction}</h3><p>Confidence: ${data.confidence}%</p>`;
+                clearCanvas();  // ✅ Auto-clear canvas after prediction
             })
             .catch(err => console.error(err));
         }
