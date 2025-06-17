@@ -2,4 +2,4 @@ flask
 torch
 torchvision
 Pillow
-numpy
+numpy<2.0
