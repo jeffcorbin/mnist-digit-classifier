@@ -14,7 +14,7 @@ python train/train_model.py
 python app.py
 ```
 
-Visit [http://localhost:5000](http://localhost:5000) to use the app.
+Visit http://127.0.0.1:5000 to use the app.
 
 ## 🐳 Docker (optional)
 
