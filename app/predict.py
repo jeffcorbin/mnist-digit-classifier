@@ -6,6 +6,7 @@ import datetime
 import csv
 import io
 import base64
+import numpy
 
 model = load_model()
 
