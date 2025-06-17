@@ -10,9 +10,56 @@
         <input type="file" name="file" required>
         <button type="submit">Predict</button>
     </form>
+
+    <h2>Or draw a digit below</h2>
+    <canvas id="canvas" width="280" height="280" style="border:1px solid #000;"></canvas>
+    <br>
+    <button onclick="clearCanvas()">Clear</button>
+    <button onclick="submitCanvas()">Predict Drawing</button>
+
+    <div id="canvas-result"></div>
+
     {% if result is not none %}
-        <h3>Prediction: {{ result }}</h3>
+        <h3>Upload Prediction: {{ result }}</h3>
         <p>Confidence: {{ confidence }}%</p>
     {% endif %}
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let painting = false;
+
+        canvas.addEventListener('mousedown', () => painting = true);
+        canvas.addEventListener('mouseup', () => painting = false);
+        canvas.addEventListener('mouseleave', () => painting = false);
+        canvas.addEventListener('mousemove', draw);
+
+        function draw(e) {
+            if (!painting) return;
+            ctx.fillStyle = 'black';
+            ctx.beginPath();
+            ctx.arc(e.offsetX, e.offsetY, 10, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function submitCanvas() {
+            const dataURL = canvas.toDataURL();
+            fetch('/predict_canvas', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ image: dataURL })
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("canvas-result").innerHTML =
+                    `<h3>Drawing Prediction: ${data.prediction}</h3><p>Confidence: ${data.confidence}%</p>`;
+            })
+            .catch(err => console.error(err));
+        }
+    </script>
 </body>
 </html>
