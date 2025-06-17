@@ -1,3 +1,30 @@
 # MNIST Digit Classifier (Flask + PyTorch + Web)
 
 Upload a hand-written digit image (0-9) and get prediction + confidence.
+
+## 🔧 Setup
+
+```bash
+git clone <your-repo-url>
+cd mnist-digit-classifier
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python train/train_model.py
+python app.py
+```
+
+Visit [http://localhost:5000](http://localhost:5000) to use the app.
+
+## 🐳 Docker (optional)
+
+```bash
+docker build -t mnist-app .
+docker run -p 5000:5000 mnist-app
+```
+
+## ✅ Features
+- PyTorch-trained digit classifier
+- Flask web app with image upload
+- Logging of inferences
+- Ready for cloud deployment
